@@ -35,7 +35,7 @@ namespace DateScanner
             }
 
             return new Regex(sb.ToString(0, sb.Length - 1), RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        },);
+        },true);
 
 
 
