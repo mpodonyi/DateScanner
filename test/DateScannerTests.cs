@@ -8,15 +8,7 @@ namespace DateScanner.Test
     public class DateScannerTests
     {
 
-        [Fact]
-        public void NullCheck()
-        {
-            var scanner = new DateScanner();
-            var result = scanner.Scan(null);
 
-            result.Found.Should().BeFalse();
-            
-        }
 
         [Theory]
         [MemberData(nameof(Data))]
@@ -28,20 +20,11 @@ namespace DateScanner.Test
             result.Should().BeEquivalentTo(expected);
         }
 
-        public static IEnumerable<object[]> Data =>
-            new List<object[]>
-            {
-                        new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
-                        new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
+        public static IEnumerable<object[]> Data => new List<object[]>
+        {
+            new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
+            new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
 
-            };
-
-        // public static IEnumerable<object[]> Data =
-        //      new List<object[]>
-        //      {
-        //         new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
-        //         new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
-
-        //      };
+        };
     }
 }
