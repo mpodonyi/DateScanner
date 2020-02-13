@@ -18,6 +18,7 @@ namespace DateScanner
 
     public class DateScanner
     {
+        private static readonly Regex regex;
         private static readonly IReadOnlyDictionary<string, Func<DateTime, int, DateTime>> DatePattern = new PatternCollection()
         {
             ["tomorrow"] = (date, _) => date.AddDays(1),
@@ -26,16 +27,19 @@ namespace DateScanner
 
         };
 
-        private static readonly Lazy<Regex> rx = new Lazy<Regex>(() =>
+        static DateScanner()
         {
             StringBuilder sb = new StringBuilder();
             foreach (var key in DatePattern.Keys)
             {
-                sb.Append($@"(?<{key.GetHashCode()}>key)|");
+
+
+                var cleanedupkey = Convert.ToBase64String(Encoding.ASCII.GetBytes(key)).Replace("=","");
+                sb.Append($@"(?<{cleanedupkey}>{key})|");
             }
 
-            return new Regex(sb.ToString(0, sb.Length - 1), RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        },true);
+            regex = new Regex(sb.ToString(0, sb.Length - 1), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        }
 
 
 
@@ -45,6 +49,8 @@ namespace DateScanner
 
         public DateScannerResult Scan(string value)
         {
+            var match = regex.Match(value);
+
             return new DateScannerResult { Found = true };
         }
     }
