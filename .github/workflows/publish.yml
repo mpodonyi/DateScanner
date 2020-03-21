@@ -38,7 +38,7 @@ jobs:
 
     #Pack  
     - name: Pack
-      run: dotnet pack $env:Project_Path -c Release --output nupkgs -p:Version=$env:NBGV_NuGetPackageVersion --include-symbols --include-source
+      run: dotnet pack $env:Project_Path -c Release --output nupkgs -p:Version=$env:NBGV_NuGetPackageVersion -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg --include-symbols --include-source
 
     #Deploy
     - name: Publish
