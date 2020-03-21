@@ -31,9 +31,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.100
-        source-url: https://api.nuget.org/v3/index.json
-      env:
-        NUGET_AUTH_Token: ${{secrets.NUGET_API_KEY}}
 
     # Test
     - name: Test
@@ -45,5 +42,10 @@ jobs:
 
     #Deploy
     - name: Publish
-      run: dotnet nuget push nupkgs/*.nupkg 
-    
+      run: dotnet nuget push nupkgs/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_API_KEY}}    
+    #tag
+    - name: Tag
+      run: git tag $env:NBGV_NuGetPackageVersion
+    #push tag  
+    - name: Push Tag
+      run: git push origin $env:NBGV_NuGetPackageVersion
