@@ -10,15 +10,10 @@ namespace DateScanner
 
     }
 
-
-    public class DateScannerResult
+    public class DateScannerBuilder
     {
-        public bool Found { get; set; }
-    }
+        private static  Regex regex;
 
-    public class DateScanner
-    {
-        private static readonly Regex regex;
         private static readonly IReadOnlyDictionary<string, Func<DateTime, int, DateTime>> DatePattern = new PatternCollection()
         {
             ["tomorrow"] = (date, _) => date.AddDays(1),
@@ -27,8 +22,9 @@ namespace DateScanner
 
         };
 
-        static DateScanner()
+        public static void BuildRegex()
         {
+
             StringBuilder sb = new StringBuilder();
             foreach (var key in DatePattern.Keys)
             {
@@ -39,17 +35,29 @@ namespace DateScanner
             }
 
             regex = new Regex(sb.ToString(0, sb.Length - 1), RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        
         }
 
 
+    }
 
+
+    public class DateScannerResult
+    {
+        public bool Found { get; set; }
+    }
+
+    public class DateScanner
+    {
+        
+       
         private readonly DateTime? Seed;
 
         public DateScanner(DateTime? seed = default) => Seed = seed;
 
         public DateScannerResult Scan(string value)
         {
-            var match = regex.Match(value);
+            //var match = regex.Match(value);
 
             return new DateScannerResult { Found = true };
         }

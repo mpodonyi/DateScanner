@@ -10,21 +10,21 @@ namespace DateScanner.Test
 
 
 
-        [Theory]
-        [MemberData(nameof(Data))]
-        public void Scan_Theory(string value, DateScannerResult expected)
-        {
-            var scanner = new DateScanner();
-            var result = scanner.Scan(value);
+        // [Theory]
+        // [MemberData(nameof(Data))]
+        // public void Scan_Theory(string value, DateScannerResult expected)
+        // {
+        //     var scanner = new DateScanner();
+        //     var result = scanner.Scan(value);
 
-            result.Should().BeEquivalentTo(expected);
-        }
+        //     result.Should().BeEquivalentTo(expected);
+        // }
 
-        public static IEnumerable<object[]> Data => new List<object[]>
-        {
-            new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
-            new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
+        // public static IEnumerable<object[]> Data => new List<object[]>
+        // {
+        //     new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
+        //     new object[] { "we see us tomorrow my friend", new DateScannerResult{Found=true} },
 
-        };
+        // };
     }
 }
