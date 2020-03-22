@@ -8,6 +8,18 @@ namespace DateScanner.Test
     public class DateScannerTests
     {
 
+         [Fact]
+         public void Scan_Theory()
+         {
+             string value = "we see us in 6 days at 5 o clock friend";
+
+            var scanner = new DateScanner();
+            var result = scanner.Scan(value);
+
+            result.Should().NotBeNull();
+         }
+
+        
 
 
         // [Theory]
