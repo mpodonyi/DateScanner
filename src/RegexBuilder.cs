@@ -17,7 +17,7 @@ namespace DateScanner
 
     internal static class RegexBuilder
     {
-        private static Lazy<Regex> _Regex =new Lazy<Regex>(BuildRegex);
+        private static readonly Lazy<Regex> _Regex =new Lazy<Regex>(BuildRegex);
         public static Regex Regex => _Regex.Value;
         
         

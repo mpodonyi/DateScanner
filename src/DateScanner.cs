@@ -10,25 +10,28 @@ namespace DateScanner
 
     public class DateScanner
     {
-        public DateScanner()
+        private readonly DateScannerOptions _options;
+        public DateScanner(DateScannerOptions options)
         {
-            
+            _options = options;
         }
 
         public DateScannerResult Scan(string value)
         {
+
             var result = RegexBuilder.Regex.Match(value);
 
+            var _ = _options.Seed;
             if (!result.Success)
             {
-                return new DateScannerResult { Found = false };
+                return new DateScannerResult { FoundDate = false };
             }
 
-            
-            
-           
 
-            return new DateScannerResult { Found = true };
+
+
+
+            return new DateScannerResult();
         }
 
     }
