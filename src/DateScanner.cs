@@ -19,10 +19,10 @@ namespace DateScanner
         public DateScannerResult Scan(string value)
         {
 
-            var result = RegexBuilder.Regex.Match(value);
+            var result = RegexBuilder.Instance.Match(value,_options.Seed ?? DateTime.Now);
 
-            var _ = _options.Seed;
-            if (!result.Success)
+
+            if (result is (null,null))
             {
                 return new DateScannerResult { FoundDate = false };
             }
