@@ -30,7 +30,7 @@ namespace DateScanner
 
             set
             {
-                base.Add(new KeyValuePair<string, Func<DateTime, string[], DateTime>>(key,value));
+                base.Add(new KeyValuePair<string, Func<DateTime, string[], DateTime>>(key, value));
             }
         }
     }
@@ -54,19 +54,20 @@ namespace DateScanner
         private static readonly PatternCollection DatePattern = new PatternCollection()
         {
             ["tomorrow"] = (date, _) => date.AddDays(1),
+            ["today"] = (date, _) => date,
             [@"in (\d+) days"] = (date, i) => date.AddDays(i[0].ToPNumber())
         };
 
         private static readonly PatternCollection TimePattern = new PatternCollection()
         {
-            [@"at (\d+) o clock"] = (date, _) => date.AddDays(2),
+            [@"at (\d+)"] = (date, i) => date.AddHours(i[0].ToPNumber() % 12 + 12)
         };
 
 
         private string BuildRegex(PatternCollection pattern, char prefix)
         {
             StringBuilder sb = new StringBuilder();
-            int i = 0;
+            var i = 0;
             foreach (var key in pattern.Keys)
             {
                 var key2 = key.Replace("(", $"(?<{prefix}b{i}>");
@@ -74,7 +75,7 @@ namespace DateScanner
                 i++;
             }
 
-            return sb.ToString(0, sb.Length - 1);
+            return "(" + sb.ToString(0, sb.Length - 1) + ")";
         }
 
 
@@ -84,10 +85,7 @@ namespace DateScanner
             var datePattern = BuildRegex(DatePattern, 'd');
             var timePattern = BuildRegex(TimePattern, 't');
 
-            var regex = $@"({datePattern})({timePattern})?";
-
-
-
+            var regex = $@"({datePattern}\s*{timePattern})|{datePattern}|{timePattern}";
 
             return new Regex(regex, RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
         }
@@ -119,11 +117,13 @@ namespace DateScanner
 
         public (DateTime? date, DateTime? time) Match(string value, DateTime seed)
         {
+            DateTime? resultDate = null;
+            DateTime? resultTime = null;
             var match = _regex.Match(value);
 
             if (!match.Success)
             {
-                return (null, null);
+                return (resultDate, resultTime);
             }
 
             var groupNames = _regex.GetGroupNames();
@@ -132,20 +132,18 @@ namespace DateScanner
             if (dateMatchKey.HasValue)
             {
                 string[] dateMatchArgs = GetParams(match.Groups, "db" + dateMatchKey);
-                DatePattern[dateMatchKey.Value](seed, dateMatchArgs);
-
+                resultDate = DatePattern[dateMatchKey.Value](seed, dateMatchArgs);
             }
 
+            int? timeMatchKey = GetKey(groupNames, match.Groups, "ta");
+            if (timeMatchKey.HasValue)
+            {
+                seed = (resultDate ?? seed).Date;
+                string[] timeMatchArgs = GetParams(match.Groups, "tb" + timeMatchKey);
+                resultTime = TimePattern[timeMatchKey.Value](seed, timeMatchArgs);
+            }
 
-
-
-            return (null, null);
-
+            return (resultDate, resultTime);
         }
-
-
-
-
-
     }
 }
