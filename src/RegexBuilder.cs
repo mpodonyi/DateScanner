@@ -1,43 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
+using DateScanner.Utils;
 
 namespace DateScanner
 {
-
-    public static class StringExtension
-    {
-        public static double ToPNumber(this string obj) => Convert.ToDouble(obj);
-
-    }
-
-    public class PatternCollection : List<KeyValuePair<string, Func<DateTime, string[], DateTime>>>
-    {
-        public IEnumerable<string> Keys => this.Select(x => x.Key);
-        public new Func<DateTime, string[], DateTime> this[int index]
-        {
-            get
-            {
-                return base[index].Value;
-            }
-
-        }
-
-        public Func<DateTime, string[], DateTime> this[string key]
-        {
-
-            set
-            {
-                base.Add(new KeyValuePair<string, Func<DateTime, string[], DateTime>>(key, value));
-            }
-        }
-    }
-
-
-
-
     internal class RegexBuilder
     {
         private readonly Regex _regex;
