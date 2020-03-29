@@ -24,9 +24,7 @@ namespace DateScanner
             if (date != null && time != null)
             {
                 return new DateScannerResult { Date = time.Value, FoundDate = true, FoundTime = true };
-            }
             else if (date != null)
-            {
                 return new DateScannerResult { Date = date.Value, FoundDate = true };
             }
             else if (time != null)
