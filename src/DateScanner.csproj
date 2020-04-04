@@ -5,7 +5,8 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <PackageId>DateScanner</PackageId>
-    <Authors>rudimenter</Authors>
+    <Description>DateScanner is a regex based library to extact dates and times from short strings and multiline texts</Description>
+    <Authors>Mike Podonyi</Authors>
   </PropertyGroup>
 
   <ItemGroup>
