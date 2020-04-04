@@ -8,7 +8,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
     env:
        Project_Path: src/DateScanner.csproj
@@ -25,6 +25,6 @@ jobs:
     
     # Test
     - name: Test
-      run: dotnet test $env:Test_Project_Path
+      run: dotnet test $Test_Project_Path
 
    
