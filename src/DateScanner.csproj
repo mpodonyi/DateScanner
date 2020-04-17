@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
+    <WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
     <PackageId>DateScanner</PackageId>
     <Description>DateScanner is a regex based library to extact dates and times from short strings and multiline texts</Description>
     <Authors>Mike Podonyi</Authors>
