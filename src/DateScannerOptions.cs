@@ -10,5 +10,7 @@ namespace DateScanner
             get => _Seed ?? DateTime.Now;
             set => _Seed = value;
         }
+
+        public bool CompileRegex { get; set; } = true;
     }
 }
