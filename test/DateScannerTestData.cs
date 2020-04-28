@@ -17,6 +17,8 @@ namespace DateScanner.Test
 
             Add(seed, "we see us tomorrow at 15 my friend", new DateScannerResult { FoundTime = true, FoundDate = true, Date = seed.AddDays(1).Date.AddHours(15) });
 
+            Add(seed, "we see us tomorrow at\n 15 my friend", new DateScannerResult { FoundTime = true, FoundDate = true, Date = seed.AddDays(1).Date.AddHours(15) });
+
         }
     }
 }

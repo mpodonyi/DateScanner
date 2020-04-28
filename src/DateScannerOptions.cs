@@ -4,12 +4,9 @@ namespace DateScanner
 {
     public class DateScannerOptions
     {
-        private DateTime? _Seed;
-        public DateTime Seed
-        {
-            get => _Seed ?? DateTime.Now;
-            set => _Seed = value;
-        }
+        public DateTime? Seed { get; set; }
+
+        public string Language { get; set; }
 
         public bool CompileRegex { get; set; } = true;
     }
